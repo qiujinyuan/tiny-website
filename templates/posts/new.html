@@ -1,0 +1,136 @@
+{{ define "posts/new.html" }}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>写文章</title>
+    {{template "css-common" .}}
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .header {
+        padding-top: 10px;
+        display: flex;
+        height: 58px;
+      }
+      .header h1 {
+        margin: 0;
+      }
+      .tool-bar {
+      }
+      .container {
+        flex: 1 0 auto;
+        display: flex;
+      }
+      .left-area,
+      .right-area {
+        flex-basis: 50%;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .md-input,
+      .md-preview {
+        flex: 1 0 auto;
+        display: flex;
+      }
+
+      .md-input textarea,
+      .md-preview {
+        margin-top: 5px;
+        padding: 0.6em;
+        border: 1px solid #ccc;
+        overflow: auto;
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+
+      .md-preview {
+        display: flex;
+      }
+      .md-preview iframe {
+        flex-grow: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <a href="/">
+        <img
+          src="https://marked.js.org/img/logo-black.svg"
+          alt="logo"
+          width="64px"
+          height="64px"
+        />
+      </a>
+      <h1>
+        Write something...
+      </h1>
+    </div>
+    <div class="container">
+      <div class="left-area">
+        <div class="tool-bar"></div>
+        <div class="md-input">
+          <textarea name="" id="" cols="30" rows="10">
+Marked - Markdown Parser
+========================
+
+[Marked] lets you convert [Markdown] into HTML.  Markdown is a simple text format whose goal is to be very easy to read and write, even when not converted to HTML.  This demo page will let you type anything you like and see how it gets converted.  Live.  No more waiting around.
+
+How To Use The Demo
+-------------------
+
+1. Type in stuff on the left.
+2. See the live updates on the right.
+
+That's it.  Pretty simple.  There's also a drop-down option in the upper right to switch between various views:
+
+- **Preview:**  A live display of the generated HTML as it would render in a browser.
+- **HTML Source:**  The generated HTML before your browser makes it pretty.
+- **Lexer Data:**  What [marked] uses internally, in case you like gory stuff like this
+- **Quick Reference:**  A brief run-down of how to format things using mark
+
+Why Markdown?
+-------------
+
+It's easy.  It's not overly bloated, unlike HTML.  Also, as the creator of [markdown] says,
+
+> The overriding design goal for Markdow
+> formatting syntax is to make it as readable
+> as possible. The idea is that a
+> Markdown-formatted document should be
+> publishable as-is, as plain text, without
+> looking like it's been marked
+> or formatting instructions.
+
+Ready to start writing?  Either start changing stuff on the left or
+[clear everything](/demo/?text=) with a simple click.
+
+[Marked]: https://github.com/markedjs/marked/
+[Markdown]: http://daringfireball.net/projects/markdown/
+
+          </textarea>
+        </div>
+      </div>
+      <div class="right-area">
+        <div class="tool-bar"></div>
+        <div class="md-preview">
+          <iframe
+            src="/posts/1.use-markdown"
+            frameborder="0"
+            sandbox="allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+{{ end }}

@@ -71,6 +71,12 @@ func main() {
 			"content": template.HTML(string(safe)),
 		})
 	})
+
+	// 新建文章
+	r.GET("/post/new", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "posts/new.html", gin.H{})
+	})
+
 	r.GET("/users/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "users/index.tmpl", gin.H{
 			"title": "<Users />",
