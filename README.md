@@ -24,3 +24,9 @@
 ## 样式
 
 尽量不把样式抽离到 css 中，使用 ```{{ define "css-common" }}``` 定义通用样式并在其他模版中使用 ```{{template "css-common" .}}``` 的方式引入，可以将样式按照 style 的方式加载，那么下载下来的 html 文件中已经有样式
+
+## 学习资料
+
+- [跟煎鱼学 Go](https://eddycjy.com/go-categories/)
+- [jwt-go](https://github.com/dgrijalva/jwt-go)
+- [JWT introduction](https://jwt.io/introduction/)

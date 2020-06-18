@@ -31,9 +31,16 @@ func main() {
 	r.LoadHTMLGlob("templates/**/*")
 
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
+		// c.JSON(200, gin.H{
+		// 	"message": "pong",
+		// })
+		// c.HTML(http.StatusUnauthorized, name string, obj interface{})
+		fmt.Println(c.Request.Header.Get("Authorization"))
+		c.Header("WWW-Authenticate", "fuck off")
+		// c.JSON(http.StatusUnauthorized, gin.H{
+		// 	"message": "401",
+		// })
+		c.JSON(http.StatusUnauthorized, nil)
 	})
 
 	r.GET("/someProtoBuf", func(c *gin.Context) {
