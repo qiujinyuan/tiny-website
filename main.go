@@ -6,7 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/qiujinyuan/tiny-website/testdata/protoexample"
+	"github.com/yrjkqq/tiny-website/pkg/setting"
+	"github.com/yrjkqq/tiny-website/testdata/protoexample"
 
 	"github.com/gin-gonic/gin"
 	"github.com/microcosm-cc/bluemonday"
@@ -90,5 +91,13 @@ func main() {
 		})
 	})
 
-	r.Run()
+	s := &http.Server{
+		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Handler:        r,
+		ReadTimeout:    setting.ReadTimeout,
+		WriteTimeout:   setting.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	s.ListenAndServe()
 }
