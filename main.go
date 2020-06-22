@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"qiujinyuan/tiny-website/testdata/protoexample"
+	"github.com/qiujinyuan/tiny-website/testdata/protoexample"
 
 	"github.com/gin-gonic/gin"
 	"github.com/microcosm-cc/bluemonday"
@@ -25,7 +25,7 @@ func main() {
 
 	// 加载静态资源
 	r.StaticFile("/favicon.ico", "./resources/favicon.ico")
-	r.Static("/assets", "./assets")
+	r.Static("/static", "./static")
 
 	// 加载 html 模板
 	r.LoadHTMLGlob("templates/**/*")
