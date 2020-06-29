@@ -7,13 +7,26 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Setting ...
 var (
-	// HTTPPort ...
-	HTTPPort int
-	// ReadTimeout ...
-	ReadTimeout time.Duration
-	// WriteTimeout ...
+	Cfg *viper.Viper
+
+	RunMode string
+
+	HTTPPort     int
+	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
+
+	JwtSecret string
+
+	PageSize int
+
+	DBType        string
+	DBUser        string
+	DBPassword    string
+	DBHost        string
+	DBName        string
+	DBTablePrefix string
 )
 
 func init() {
@@ -24,11 +37,34 @@ func init() {
 	if err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s", err))
 	}
+	Cfg = viper.GetViper()
+	loadBase()
 	loadServer()
+	loadApp()
+	loadDB()
+}
+
+func loadBase() {
+	Cfg.SetDefault("RunMode", "debug")
+	RunMode = Cfg.GetString("RunMode")
 }
 
 func loadServer() {
-	HTTPPort = viper.GetInt("http_port")
-	ReadTimeout = time.Duration(viper.GetInt("read_timeout")) * time.Second
-	WriteTimeout = time.Duration(viper.GetInt("write_timeout")) * time.Second
+	HTTPPort = Cfg.GetInt("HTTPPort")
+	ReadTimeout = time.Duration(Cfg.GetInt("ReadTimeout")) * time.Second
+	WriteTimeout = time.Duration(Cfg.GetInt("WriteTimeout")) * time.Second
+}
+
+func loadApp() {
+	JwtSecret = Cfg.GetString("JwtSecret")
+	PageSize = Cfg.GetInt("PageSize")
+}
+
+func loadDB() {
+	DBType = Cfg.GetString("DBType")
+	DBUser = Cfg.GetString("DBUser")
+	DBPassword = Cfg.GetString("DBPassword")
+	DBHost = Cfg.GetString("DBHost")
+	DBName = Cfg.GetString("DBName")
+	DBTablePrefix = Cfg.GetString("DBTablePrefix")
 }
