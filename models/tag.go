@@ -1,6 +1,8 @@
 package models
 
-import "log"
+import (
+	"log"
+)
 
 // Tag 文章标签
 type Tag struct {
@@ -25,12 +27,23 @@ func GetTagTotal(maps interface{}) (count int) {
 }
 
 // ExistTagByName 通过名称判断 tag 是否存在
-func ExistTagByName(name string) bool {
-	var tag Tag
-	if !db.Where("name = ?", name).Find(&tag).RecordNotFound() {
-		return true
+func ExistTagByName(name string) (exist bool, tag Tag) {
+	if db.Where("name = ?", name).Find(&tag).RecordNotFound() {
+		exist = false
+		return
 	}
-	return false
+	exist = true
+	return
+}
+
+// ExistTagById 通过 id 判断 tag 是否存在
+func ExistTagById(id string) (exist bool, tag Tag) {
+	if db.Where("id = ?", id).Find(&tag).RecordNotFound() {
+		exist = false
+		return
+	}
+	exist = true
+	return
 }
 
 // AddTag 增加 tag
@@ -41,7 +54,28 @@ func AddTag(name string, state int, createdBy string) bool {
 		CreatedBy: createdBy,
 	}).Error
 	if err != nil {
-		log.Panic("Unable to create user", err)
+		log.Println("Unable to create user: ", err)
+		return false
+	}
+	return true
+}
+
+// DeleteTag 删除标签
+func DeleteTag(id string) bool {
+	err := db.Where("id = ?", id).Delete(&Tag{}).Error
+	if err != nil {
+		log.Println("Delete tag by id failed: ", id, err)
+		return false
+	}
+	return true
+}
+
+// 编辑标签
+func EditTag(id string, data interface{}) bool {
+	err := db.Model(&Tag{}).Where("id = ?", id).Updates(data).Error
+	if err != nil {
+		log.Println("Edit tag failed: ", id, err)
+		return false
 	}
 	return true
 }
