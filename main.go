@@ -11,6 +11,10 @@ import (
 func main() {
 	fmt.Println("starting...")
 
+	// demo here
+	// demo.BeegoValidationDemo()
+	// demo.GoUUIDDemo()
+
 	r := routers.InitRouter()
 
 	s := &http.Server{

@@ -1,8 +1,10 @@
 package models
 
+import "log"
+
 // Tag 文章标签
 type Tag struct {
-	Model
+	Base
 
 	Name       string `json:"name"`
 	CreatedBy  string `json:"createdBy"`
@@ -25,8 +27,7 @@ func GetTagTotal(maps interface{}) (count int) {
 // ExistTagByName 通过名称判断 tag 是否存在
 func ExistTagByName(name string) bool {
 	var tag Tag
-	db.Select("id").Where("name = ?", name).Find(&tag)
-	if tag.ID > 0 {
+	if !db.Where("name = ?", name).Find(&tag).RecordNotFound() {
 		return true
 	}
 	return false
@@ -34,10 +35,13 @@ func ExistTagByName(name string) bool {
 
 // AddTag 增加 tag
 func AddTag(name string, state int, createdBy string) bool {
-	db.Create(&Tag{
+	err := db.Create(&Tag{
 		Name:      name,
 		State:     state,
 		CreatedBy: createdBy,
-	})
+	}).Error
+	if err != nil {
+		log.Panic("Unable to create user", err)
+	}
 	return true
 }

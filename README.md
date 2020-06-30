@@ -28,5 +28,19 @@
 ## 学习资料
 
 - [跟煎鱼学 Go](https://eddycjy.com/go-categories/)
-- [jwt-go](https://github.com/dgrijalva/jwt-go)
+- [Build Web Application with Golang](https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/preface.md)
 - [JWT introduction](https://jwt.io/introduction/)
+- [Debugging a Go Web App with VSCode and Delve](https://www.thegreatcodeadventure.com/debugging-a-go-web-app-with-vscode-and-delve/)
+- [Debugging vscode-go](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
+- [How to Use UUID Key Type with Gorm](https://medium.com/@the.hasham.ali/how-to-use-uuid-key-type-with-gorm-cc00d4ec7100)
+- [Store UUID v4 in MySQL](https://stackoverflow.com/questions/43056220/store-uuid-v4-in-mysql)
+- [Storing UUID Values in MySQL Tables](https://mysqlserverteam.com/storing-uuid-values-in-mysql-tables/)
+
+
+## 库
+
+- [jwt-go](https://github.com/dgrijalva/jwt-go)
+- [beego-validation](https://beego.me/docs/mvc/controller/validation.md)
+- [gorm](https://gorm.io/docs/query.html#Where)
+- [gin](https://gin-gonic.com/docs/examples/controlling-log-output-coloring/)
+- [UUID package for Go language](https://github.com/satori/go.uuid)
