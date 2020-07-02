@@ -96,8 +96,8 @@ func EditTag(c *gin.Context) {
 	}
 
 	valid.Required(id, "id").Message("ID不能为空")
-	valid.Required(modifiedBy, "modified_by").Message("修改人不能为空")
-	valid.MaxSize(modifiedBy, 100, "modified_by").Message("修改人最长为100字符")
+	valid.Required(modifiedBy, "modifiedBy").Message("修改人不能为空")
+	valid.MaxSize(modifiedBy, 100, "modifiedBy").Message("修改人最长为100字符")
 	valid.MaxSize(name, 100, "name").Message("名称最长为100字符")
 
 	code := e.InvalidParams
@@ -108,7 +108,7 @@ func EditTag(c *gin.Context) {
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
-		if exist, _ := models.ExistTagById(id); exist {
+		if exist, _ := models.ExistTagByID(id); exist {
 			data := make(map[string]interface{})
 			data["modifiedBy"] = modifiedBy
 			if name != "" {
@@ -150,7 +150,7 @@ func DeleteTag(c *gin.Context) {
 
 	code := e.InvalidParams
 	if !valid.HasErrors() {
-		if exist, _ := models.ExistTagById(id); exist {
+		if exist, _ := models.ExistTagByID(id); exist {
 			if models.DeleteTag(id) {
 				code = e.Success
 			} else {

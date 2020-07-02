@@ -14,7 +14,7 @@ CREATE TABLE `blog_tag` (
 
 CREATE TABLE `blog_article` (
   `id` VARCHAR(36) NOT NULL,
-  `tag_id` int(10) unsigned DEFAULT '0' COMMENT '标签ID',
+  `tag_id` VARCHAR(36) COMMENT '标签ID',
   `title` varchar(100) DEFAULT '' COMMENT '文章标题',
   `desc` varchar(255) DEFAULT '' COMMENT '简述',
   `content` text,
@@ -35,3 +35,7 @@ CREATE TABLE `blog_auth` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `tiny_website`.`blog_auth` (`id`, `username`, `password`) VALUES (uuid(), 'test', 'test123456');
+
+INSERT INTO `tiny_website`.`blog_tag` (`id`, `name`) VALUES (uuid(), 'tag-01');
+
+INSERT INTO `tiny_website`.`blog_article` (`id`, `tag_id`, `title`, `desc`, `content`) VALUES (uuid(), '747a28d0-bb66-11ea-8e04-9adb7ad4b719', 'title', 'desc', 'content');

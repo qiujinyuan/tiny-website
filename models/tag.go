@@ -36,8 +36,8 @@ func ExistTagByName(name string) (exist bool, tag Tag) {
 	return
 }
 
-// ExistTagById 通过 id 判断 tag 是否存在
-func ExistTagById(id string) (exist bool, tag Tag) {
+// ExistTagByID 通过 id 判断 tag 是否存在
+func ExistTagByID(id string) (exist bool, tag Tag) {
 	if db.Where("id = ?", id).Find(&tag).RecordNotFound() {
 		exist = false
 		return
@@ -70,7 +70,7 @@ func DeleteTag(id string) bool {
 	return true
 }
 
-// 编辑标签
+// EditTag 编辑标签
 func EditTag(id string, data interface{}) bool {
 	err := db.Model(&Tag{}).Where("id = ?", id).Updates(data).Error
 	if err != nil {
