@@ -36,7 +36,8 @@
 - [How to Use UUID Key Type with Gorm](https://medium.com/@the.hasham.ali/how-to-use-uuid-key-type-with-gorm-cc00d4ec7100)
 - [Store UUID v4 in MySQL](https://stackoverflow.com/questions/43056220/store-uuid-v4-in-mysql)
 - [Storing UUID Values in MySQL Tables](https://mysqlserverteam.com/storing-uuid-values-in-mysql-tables/)
-
+- [如何重构“箭头型”代码](https://coolshell.cn/articles/17757.html)
+- [Go Concurrency Patterns: Context](https://blog.golang.org/context)
 
 ## 库
 
@@ -45,3 +46,4 @@
 - [gorm](https://gorm.io/docs/query.html#Where)
 - [gin](https://gin-gonic.com/docs/examples/controlling-log-output-coloring/)
 - [UUID package for Go language](https://github.com/satori/go.uuid)
+- [go-redis](https://github.com/go-redis/redis)

@@ -27,6 +27,8 @@ var (
 	DBHost        string
 	DBName        string
 	DBTablePrefix string
+
+	RedisCfg map[string]interface{}
 )
 
 func init() {
@@ -42,6 +44,7 @@ func init() {
 	loadServer()
 	loadApp()
 	loadDB()
+	loadRedisCfg()
 }
 
 func loadBase() {
@@ -67,4 +70,8 @@ func loadDB() {
 	DBHost = Cfg.GetString("DBHost")
 	DBName = Cfg.GetString("DBName")
 	DBTablePrefix = Cfg.GetString("DBTablePrefix")
+}
+
+func loadRedisCfg() {
+	RedisCfg = Cfg.GetStringMap("RedisCfg")
 }

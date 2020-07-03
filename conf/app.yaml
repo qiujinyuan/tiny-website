@@ -19,3 +19,11 @@ DBPassword: "03221006"
 DBHost: 127.0.0.1:3306
 DBName: tiny_website
 DBTablePrefix: blog_
+
+#redis config
+RedisCfg:
+  Host: 127.0.0.1:6379
+  Password:
+  MaxIdle: 30
+  MaxActive: 30
+  IdleTimeout: 20
