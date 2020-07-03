@@ -6,7 +6,7 @@ import "log"
 type Article struct {
 	Base
 
-	TagID string `json:"tagId" gorm:"index"`
+	TagID string `json:"tagID" gorm:"index"`
 	Tag   Tag    `json:"tag"`
 
 	Title      string `json:"title"`
@@ -63,7 +63,7 @@ func EditArticle(id string, data interface{}) bool {
 
 // AddArticle add an article
 func AddArticle(data map[string]interface{}) bool {
-	tagID, ok := data["tagId"].(string)
+	tagID, ok := data["tagID"].(string)
 	if !ok {
 		tagID = ""
 	}

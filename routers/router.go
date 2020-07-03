@@ -8,7 +8,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/yrjkqq/tiny-website/middleware/jwt"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
+	"github.com/yrjkqq/tiny-website/routers/api"
 	v1 "github.com/yrjkqq/tiny-website/routers/api/v1"
 	"github.com/yrjkqq/tiny-website/testdata/protoexample"
 	blackfriday "gopkg.in/russross/blackfriday.v2"
@@ -27,7 +29,10 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
+	r.GET("/auth", api.GetAuth)
+
 	apiV1 := r.Group("/api/v1")
+	apiV1.Use(jwt.JWT())
 	{
 		apiV1.GET("/tags", v1.GetTags)
 		apiV1.POST("/tags", v1.AddTag)

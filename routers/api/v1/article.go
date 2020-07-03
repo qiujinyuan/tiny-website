@@ -59,9 +59,9 @@ func GetArticles(c *gin.Context) {
 		valid.Range(state, 0, 1, "state").Message("状态只允许 0 或 1")
 	}
 
-	tagId := c.Query("tagId")
-	if tagId != "" {
-		maps["tagId"] = tagId
+	tagID := c.Query("tagID")
+	if tagID != "" {
+		maps["tagID"] = tagID
 	}
 
 	code := e.InvalidParams
@@ -85,9 +85,9 @@ func GetArticles(c *gin.Context) {
 }
 
 // AddArticle 新增文章
-// tagId 可以为空
+// tagID 可以为空
 func AddArticle(c *gin.Context) {
-	tagId := c.Query("tagId")
+	tagID := c.Query("tagID")
 	title := c.Query("title")
 	desc := c.Query("desc")
 	content := c.Query("content")
@@ -109,10 +109,10 @@ func AddArticle(c *gin.Context) {
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
-		if tagId != "" {
-			if exist, _ := models.ExistTagByID(tagId); exist {
+		if tagID != "" {
+			if exist, _ := models.ExistTagByID(tagID); exist {
 				success := models.AddArticle(map[string]interface{}{
-					"tagId":     tagId,
+					"tagID":     tagID,
 					"title":     title,
 					"desc":      desc,
 					"content":   content,
@@ -150,12 +150,12 @@ func AddArticle(c *gin.Context) {
 }
 
 // EditArticle 修改文章
-// 修改时不允许清空 tagId
+// 修改时不允许清空 tagID
 func EditArticle(c *gin.Context) {
 	valid := validation.Validation{}
 
 	id := c.Param("id")
-	tagId := c.Query("tagId")
+	tagID := c.Query("tagID")
 	title := c.Query("title")
 	desc := c.Query("desc")
 	content := c.Query("content")
@@ -184,8 +184,8 @@ func EditArticle(c *gin.Context) {
 	} else {
 		if exist, _ := models.ExistArticleByID(id); exist {
 			data := make(map[string]interface{})
-			if tagId != "" {
-				existTag, _ := models.ExistTagByID(tagId)
+			if tagID != "" {
+				existTag, _ := models.ExistTagByID(tagID)
 				if !existTag {
 					code = e.ErrorNotExistTag
 					c.JSON(http.StatusOK, gin.H{
@@ -194,7 +194,7 @@ func EditArticle(c *gin.Context) {
 					})
 					return
 				}
-				data["tagId"] = tagId
+				data["tagID"] = tagID
 			}
 			if title != "" {
 				data["title"] = title

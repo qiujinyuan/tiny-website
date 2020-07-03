@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/astaxie/beego v1.12.1
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
@@ -22,10 +23,4 @@ require (
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
 
-// github.com/yrjkqq/tiny-website/routers => ./routers
-// github.com/yrjkqq/tiny-website/models => ./models
-// github.com/yrjkqq/tiny-website/pkg/util => ./pkg/util
-// github.com/yrjkqq/tiny-website/pkg/e => ./pkg/e
-// github.com/yrjkqq/tiny-website/pkg/setting => ./pkg/setting
-// github.com/yrjkqq/tiny-website/testdata/protoexample => ./testdata/protoexample
 replace gopkg.in/russross/blackfriday.v2 => github.com/russross/blackfriday/v2 v2.0.1

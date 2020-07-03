@@ -30,6 +30,7 @@
 - [跟煎鱼学 Go](https://eddycjy.com/go-categories/)
 - [Build Web Application with Golang](https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/preface.md)
 - [JWT introduction](https://jwt.io/introduction/)
+- [Using JWT for Authentication in a Golang Application](https://www.nexmo.com/blog/2020/03/13/using-jwt-for-authentication-in-a-golang-application-dr)
 - [Debugging a Go Web App with VSCode and Delve](https://www.thegreatcodeadventure.com/debugging-a-go-web-app-with-vscode-and-delve/)
 - [Debugging vscode-go](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
 - [How to Use UUID Key Type with Gorm](https://medium.com/@the.hasham.ali/how-to-use-uuid-key-type-with-gorm-cc00d4ec7100)
