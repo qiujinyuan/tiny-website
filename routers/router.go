@@ -31,6 +31,8 @@ func InitRouter() *gin.Engine {
 
 	r.GET("/auth", api.GetAuth)
 
+	r.GET("/logout", jwt.JWT(), api.Logout)
+
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
 	{

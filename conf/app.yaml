@@ -9,7 +9,12 @@ WriteTimeout: 10
 
 #app
 PageSize: 10
-JwtSecret: hsyqgw77&&&dghsd
+AccessJwtSecret: hsyqgw77&&&dghsd
+RefreshJwtSecret: ahsdua17819cskcdskd
+# access token expires after 15 minute
+AccessTokenExpires: 15
+## refresh token expires after 7 days
+RefreshTokenExpires: 7
 
 #database
 DBType: mysql
@@ -22,8 +27,11 @@ DBTablePrefix: blog_
 
 #redis config
 RedisCfg:
-  Host: 127.0.0.1:6379
-  Password:
-  MaxIdle: 30
-  MaxActive: 30
-  IdleTimeout: 20
+  # viper GetStringMap() method will return lowercase key
+  addr: 127.0.0.1:6379
+  network: tcp
+  dialtimeout: 5
+  password: ""
+  maxidle: 30
+  maxactive: 30
+  adletimeout: 20

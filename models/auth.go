@@ -10,10 +10,12 @@ type Auth struct {
 }
 
 // CheckAuth ...
-func CheckAuth(username, password string) bool {
-	notFound := db.Select("id").Where(Auth{Username: username, Password: password}).RecordNotFound()
+func CheckAuth(username, password string) (exist bool, auth Auth) {
+	notFound := db.Where(&Auth{Username: username, Password: password}).First(&auth).RecordNotFound()
 	if notFound {
-		return false
+		exist = false
+		return
 	}
-	return true
+	exist = true
+	return
 }

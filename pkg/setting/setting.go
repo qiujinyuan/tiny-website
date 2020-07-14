@@ -17,7 +17,10 @@ var (
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 
-	JwtSecret string
+	AccessJwtSecret     string
+	RefreshJwtSecret    string
+	AccessTokenExpires  time.Duration
+	RefreshTokenExpires time.Duration
 
 	PageSize int
 
@@ -59,7 +62,10 @@ func loadServer() {
 }
 
 func loadApp() {
-	JwtSecret = Cfg.GetString("JwtSecret")
+	AccessJwtSecret = Cfg.GetString("AccessJwtSecret")
+	RefreshJwtSecret = Cfg.GetString("RefreshJwtSecret")
+	AccessTokenExpires = time.Duration(Cfg.GetInt("AccessTokenExpires"))
+	RefreshTokenExpires = time.Duration(Cfg.GetInt("AccessTokenExpires"))
 	PageSize = Cfg.GetInt("PageSize")
 }
 
@@ -73,5 +79,6 @@ func loadDB() {
 }
 
 func loadRedisCfg() {
+	// Important: Viper configuration keys are case insensitive. There are ongoing discussions about making that optional.
 	RedisCfg = Cfg.GetStringMap("RedisCfg")
 }

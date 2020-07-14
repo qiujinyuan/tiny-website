@@ -38,6 +38,7 @@
 - [Storing UUID Values in MySQL Tables](https://mysqlserverteam.com/storing-uuid-values-in-mysql-tables/)
 - [如何重构“箭头型”代码](https://coolshell.cn/articles/17757.html)
 - [Go Concurrency Patterns: Context](https://blog.golang.org/context)
+- [The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/)
 
 ## 库
 
