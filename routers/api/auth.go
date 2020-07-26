@@ -2,7 +2,6 @@ package api
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -11,6 +10,7 @@ import (
 	"github.com/yrjkqq/tiny-website/models"
 	"github.com/yrjkqq/tiny-website/pkg/e"
 	"github.com/yrjkqq/tiny-website/pkg/gredis"
+	"github.com/yrjkqq/tiny-website/pkg/logging"
 	"github.com/yrjkqq/tiny-website/pkg/util"
 )
 
@@ -71,7 +71,7 @@ func GetAuth(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	}

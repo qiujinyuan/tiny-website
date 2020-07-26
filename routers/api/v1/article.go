@@ -2,7 +2,6 @@ package v1
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
@@ -10,6 +9,7 @@ import (
 	"github.com/unknwon/com"
 	"github.com/yrjkqq/tiny-website/models"
 	"github.com/yrjkqq/tiny-website/pkg/e"
+	"github.com/yrjkqq/tiny-website/pkg/logging"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
 	"github.com/yrjkqq/tiny-website/pkg/util"
 )
@@ -26,7 +26,7 @@ func GetArticle(c *gin.Context) {
 	var data interface{}
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
@@ -68,7 +68,7 @@ func GetArticles(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(fmt.Sprintf("err.key: %s, err.message: %s", err.Key, err.Message))
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
@@ -105,7 +105,7 @@ func AddArticle(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(fmt.Sprintf("err.key: %s, err.message: %s", err.Key, err.Message))
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
@@ -178,7 +178,7 @@ func EditArticle(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(fmt.Sprintf("err.key: %s, err.message: %s", err.Key, err.Message))
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
@@ -235,7 +235,7 @@ func DeleteArticle(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(fmt.Sprintf("err.key: %s, err.message: %s", err.Key, err.Message))
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {

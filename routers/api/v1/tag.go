@@ -2,7 +2,6 @@ package v1
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
@@ -10,6 +9,7 @@ import (
 	"github.com/unknwon/com"
 	"github.com/yrjkqq/tiny-website/models"
 	"github.com/yrjkqq/tiny-website/pkg/e"
+	"github.com/yrjkqq/tiny-website/pkg/logging"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
 	"github.com/yrjkqq/tiny-website/pkg/util"
 )
@@ -62,7 +62,7 @@ func AddTag(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
@@ -104,7 +104,7 @@ func EditTag(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
