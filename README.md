@@ -48,3 +48,7 @@
 - [gin](https://gin-gonic.com/docs/examples/controlling-log-output-coloring/)
 - [UUID package for Go language](https://github.com/satori/go.uuid)
 - [go-redis](https://github.com/go-redis/redis)
+
+## swagger
+
+- [swagger](http://127.0.0.1:10086/swagger/index.html)

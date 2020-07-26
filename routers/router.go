@@ -8,6 +8,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/microcosm-cc/bluemonday"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	// docs
+	_ "github.com/yrjkqq/tiny-website/docs"
 	"github.com/yrjkqq/tiny-website/middleware/jwt"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
 	"github.com/yrjkqq/tiny-website/routers/api"
@@ -32,6 +37,8 @@ func InitRouter() *gin.Engine {
 	r.GET("/auth", api.GetAuth)
 
 	r.GET("/logout", jwt.JWT(), api.Logout)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	apiV1 := r.Group("/api/v1")
 	apiV1.Use(jwt.JWT())
