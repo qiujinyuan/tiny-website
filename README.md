@@ -48,3 +48,9 @@
 - [gin](https://gin-gonic.com/docs/examples/controlling-log-output-coloring/)
 - [UUID package for Go language](https://github.com/satori/go.uuid)
 - [go-redis](https://github.com/go-redis/redis)
+
+## 构建
+
+使用 ldflags 设置构建参数时, 除 main 包以外需要使用完整路径包名
+
+- [Using ldflags to Set Version Information for Go Applications](https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications)
