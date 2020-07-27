@@ -15,7 +15,8 @@ var Version = "dev"
 var showVersion = flag.Bool("version", false, "Print version of the binary")
 
 func main() {
-	fmt.Println("start...")
+	fmt.Println("starting...")
+
 	if !flag.Parsed() {
 		flag.Parse()
 	}
@@ -31,9 +32,6 @@ func main() {
 	// demo.GoUUIDDemo()
 	// demo.GoRedisExampleClient()
 
-	// fmt.Printf("%q\n", time.Now().Format("2006/01/02 - 15:04:05.00000"))
-	// fmt.Printf("%q\n", time.Now().Format("2006/01/02 - 15:04:05.99999999"))
-
 	// gredis.Setup()
 
 	// r := routers.InitRouter()
@@ -46,5 +44,39 @@ func main() {
 	// 	MaxHeaderBytes: 1 << 20,
 	// }
 
-	// s.ListenAndServe()
+	// go func() {
+	// 	if err := s.ListenAndServe(); err != nil {
+	// 		log.Printf("Listen: %s\n", err)
+	// 	}
+	// }()
+
+	// quit := make(chan os.Signal)
+	// signal.Notify(quit, os.Interrupt)
+	// <-quit
+
+	// log.Println("Shutdown Server ...")
+
+	// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	// defer cancel()
+	// if err := s.Shutdown(ctx); err != nil {
+	// 	log.Fatal("Server Shutdown: ", err)
+	// }
+
+	// log.Println("Server exiting")
+
+	// endless 在 windows 下面无法使用, 有几个信号 windows 下未定义
+	// endless.DefaultReadTimeOut = setting.ReadTimeout
+	// endless.DefaultWriteTimeOut = setting.WriteTimeout
+	// endless.DefaultMaxHeaderBytes = 1 << 20
+	// endPoint := fmt.Sprintf(":%d", setting.HTTPPort)
+
+	// server := endless.NewServer(endPoint, routers.InitRouter())
+	// server.BeforeBegin = func(add string) {
+	// 	log.Printf("Actual pid is %d", syscall.Getpid())
+	// }
+
+	// err := server.ListenAndServe()
+	// if err != nil {
+	// 	log.Printf("Serve err: %v", err)
+	// }
 }
