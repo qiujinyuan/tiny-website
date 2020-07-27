@@ -1,10 +1,19 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
 
 	"github.com/yrjkqq/tiny-website/app/build"
+	"github.com/yrjkqq/tiny-website/pkg/gredis"
+	"github.com/yrjkqq/tiny-website/pkg/setting"
+	"github.com/yrjkqq/tiny-website/routers"
 )
 
 // Version  go build -ldflags="-X 'main.Version=v1.0.0' -X 'github.com/yrjkqq/tiny-website/app/build.Time=$(date)' -X 'github.com/yrjkqq/tiny-website/app/build.User=$(id -u -n)'"
@@ -32,37 +41,37 @@ func main() {
 	// demo.GoUUIDDemo()
 	// demo.GoRedisExampleClient()
 
-	// gredis.Setup()
+	gredis.Setup()
 
-	// r := routers.InitRouter()
+	r := routers.InitRouter()
 
-	// s := &http.Server{
-	// 	Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
-	// 	Handler:        r,
-	// 	ReadTimeout:    setting.ReadTimeout,
-	// 	WriteTimeout:   setting.WriteTimeout,
-	// 	MaxHeaderBytes: 1 << 20,
-	// }
+	s := &http.Server{
+		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Handler:        r,
+		ReadTimeout:    setting.ReadTimeout,
+		WriteTimeout:   setting.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
+	}
 
-	// go func() {
-	// 	if err := s.ListenAndServe(); err != nil {
-	// 		log.Printf("Listen: %s\n", err)
-	// 	}
-	// }()
+	go func() {
+		if err := s.ListenAndServe(); err != nil {
+			log.Printf("Listen: %s\n", err)
+		}
+	}()
 
-	// quit := make(chan os.Signal)
-	// signal.Notify(quit, os.Interrupt)
-	// <-quit
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
 
-	// log.Println("Shutdown Server ...")
+	log.Println("Shutdown Server ...")
 
-	// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	// defer cancel()
-	// if err := s.Shutdown(ctx); err != nil {
-	// 	log.Fatal("Server Shutdown: ", err)
-	// }
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := s.Shutdown(ctx); err != nil {
+		log.Fatal("Server Shutdown: ", err)
+	}
 
-	// log.Println("Server exiting")
+	log.Println("Server exiting")
 
 	// endless 在 windows 下面无法使用, 有几个信号 windows 下未定义
 	// endless.DefaultReadTimeOut = setting.ReadTimeout

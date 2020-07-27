@@ -10,22 +10,12 @@
       "type": "go",
       "request": "launch",
       "mode": "debug",
-      "program": "${workspaceFolder}/app",
+      "program": "${workspaceFolder}",
       "env": {},
-      "args": ["-version"],
+      // "args": ["-version"],
+      "args": [],
       "showLog": true,
       "buildFlags": "-ldflags='-X 'main.Version=v1.0.0' -X 'github.com/yrjkqq/tiny-website/app/build.Time=$(date)' -X 'github.com/yrjkqq/tiny-website/app/build.User=Yuan''"
     },
-    // https://www.thegreatcodeadventure.com/debugging-a-go-web-app-with-vscode-and-delve/
-    {
-      "name": "Launch",
-      "type": "go",
-      "request": "launch",
-      "mode": "auto",
-      "program": "${workspaceFolder}/app/main.go",
-      "env": { "GITHUB_TOKEN": "xxxxx" }, // our app makes a call to the GH API and contains code that fetches this ENV var,
-      // "envFile": "${workspaceFolder}/.env",
-      "args": []
-    }
   ]
 }
