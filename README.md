@@ -54,3 +54,40 @@
 使用 ldflags 设置构建参数时, 除 main 包以外需要使用完整路径包名
 
 - [Using ldflags to Set Version Information for Go Applications](https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications)
+
+## swagger
+
+- [swagger](http://127.0.0.1:10086/swagger/index.html)
+
+## docker 
+
+docker 配置国内镜像源
+https://www.jianshu.com/p/405fe33b9032
+阿里云
+镜像加速器地址: https://lz7zbl35.mirror.aliyuncs.com
+操作文档: https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
+
+构建本地镜像
+```bash
+docker build -t tiny-website-docker .
+```
+
+本地镜像构建完成后, 启动 docker 容器
+```bash
+docker run --link mysql:mysql -p 8000:10086 tiny-website-docker
+```
+
+## mysql
+
+docker 安装 mysql
+```bash
+docker pull mysql
+```
+启动 mysql container
+```bash
+docker run --name mysql -p 3307:3306 -e MYSQL_ROOT_PASSWORD=rootroot -d mysql
+```
+windows 访问 docker 内安装的 mysql
+```bash
+mysql -P 3307 -u root -p
+```

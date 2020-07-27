@@ -1,3 +1,5 @@
+create database tiny_website;
+use tiny_website;
 drop table blog_tag;
 
 CREATE TABLE `blog_tag` (

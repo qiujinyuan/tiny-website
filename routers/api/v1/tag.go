@@ -2,7 +2,6 @@ package v1
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
@@ -10,6 +9,7 @@ import (
 	"github.com/unknwon/com"
 	"github.com/yrjkqq/tiny-website/models"
 	"github.com/yrjkqq/tiny-website/pkg/e"
+	"github.com/yrjkqq/tiny-website/pkg/logging"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
 	"github.com/yrjkqq/tiny-website/pkg/util"
 )
@@ -45,6 +45,13 @@ func GetTags(c *gin.Context) {
 }
 
 // AddTag 新增文章标签
+// @Summary 新增文章标签
+// @Produce  json
+// @Param name query string true "Name"
+// @Param state query int false "State"
+// @Param created_by query int false "CreatedBy"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags [post]
 func AddTag(c *gin.Context) {
 	name := c.Query("name")
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
@@ -62,7 +69,7 @@ func AddTag(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
@@ -104,7 +111,7 @@ func EditTag(c *gin.Context) {
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {

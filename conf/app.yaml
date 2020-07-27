@@ -20,8 +20,9 @@ RefreshTokenExpires: 7
 DBType: mysql
 DBUser: root
 # 前导0 会被当作 八进制数 viper.GetString() 后返回十进制数, 需要加引号
-DBPassword: "03221006"
-DBHost: 127.0.0.1:3306
+# 链接 docker 中安装的 mysql
+DBPassword: rootroot
+DBHost: mysql:3306
 DBName: tiny_website
 DBTablePrefix: blog_
 
