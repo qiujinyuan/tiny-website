@@ -49,7 +49,7 @@ func init() {
 	var err error
 	db, err = gorm.Open(setting.DBType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", setting.DBUser, setting.DBPassword, setting.DBHost, setting.DBName))
 	if err != nil {
-		log.Println(err)
+		log.Fatalln(err)
 	}
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return setting.DBTablePrefix + defaultTableName
