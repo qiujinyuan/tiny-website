@@ -17,5 +17,16 @@
       "showLog": true,
       "buildFlags": "-ldflags='-X 'main.Version=v1.0.0' -X 'github.com/yrjkqq/tiny-website/app/build.Time=$(date)' -X 'github.com/yrjkqq/tiny-website/app/build.User=Yuan''"
     },
+    {
+      "name": "DEMO",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}",
+      "env": {},
+      "args": ["-demo"],
+      "showLog": true,
+      "buildFlags": "-ldflags='-X 'main.Version=v1.0.0' -X 'github.com/yrjkqq/tiny-website/app/build.Time=$(date)' -X 'github.com/yrjkqq/tiny-website/app/build.User=Yuan''"
+    },
   ]
 }
