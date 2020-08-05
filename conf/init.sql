@@ -41,4 +41,4 @@ INSERT INTO `tiny_website`.`blog_auth` (`id`, `username`, `password`) VALUES (uu
 
 INSERT INTO `tiny_website`.`blog_tag` (`id`, `name`) VALUES (uuid(), 'default');
 
-INSERT INTO `tiny_website`.`blog_article` (`id`, `tag_id`, `title`, `desc`, `content`) VALUES (uuid(), '5f7c733f-d4d1-11ea-a140-0242ac110002', 'default title', 'default desc', 'default content');
+INSERT INTO `tiny_website`.`blog_article` (`id`, `tag_id`, `title`, `desc`, `content`) VALUES (uuid(), '1eb562e9-d6ea-11ea-a475-0242ac110002', 'default title', 'default desc', 'default content');

@@ -28,7 +28,8 @@ func main() {
 		// demo.BeegoValidationDemo()
 		// demo.GoUUIDDemo()
 		// demo.GoRedisExampleClient()
-		demo.ContextPkgUseDemo()
+		// demo.ContextPkgUseDemo()
+		demo.CronUseDemo()
 		return
 	}
 
@@ -38,6 +39,8 @@ func main() {
 		fmt.Println("build.User:\t", build.User)
 		return
 	}
+
+	go app.ServeBackground()
 
 	app.Start()
 }

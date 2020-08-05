@@ -30,6 +30,10 @@ func Setup() error {
 			return err
 		},
 	})
+	r, err := RDB.Ping(ctx).Result()
+	if err != nil {
+		fmt.Printf("Redis conn test failed, result: %v, error: %v", r, err)
+	}
 	return nil
 }
 

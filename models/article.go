@@ -1,6 +1,10 @@
 package models
 
-import "log"
+import (
+	"log"
+
+	"github.com/yrjkqq/tiny-website/pkg/logging"
+)
 
 // Article 文章
 type Article struct {
@@ -91,4 +95,14 @@ func DeleteArticle(id string) (err error) {
 		return
 	}
 	return
+}
+
+// ClearAllSoftDeletedArticle 删除所有已经软删除的 article
+func ClearAllSoftDeletedArticle() bool {
+	err := db.Where("deleted_at IS NOT NULL").Delete(&Article{}).Error
+	if err != nil {
+		logging.Error("Clear all soft deleted article failed: ", err)
+		return false
+	}
+	return true
 }

@@ -2,6 +2,8 @@ package models
 
 import (
 	"log"
+
+	"github.com/yrjkqq/tiny-website/pkg/logging"
 )
 
 // Tag 文章标签
@@ -75,6 +77,16 @@ func EditTag(id string, data interface{}) bool {
 	err := db.Model(&Tag{}).Where("id = ?", id).Updates(data).Error
 	if err != nil {
 		log.Println("Edit tag failed: ", id, err)
+		return false
+	}
+	return true
+}
+
+// ClearAllSoftDeletedTag 删除所有已经软删除的 tag
+func ClearAllSoftDeletedTag() bool {
+	err := db.Where("deleted_at IS NOT NULL").Delete(&Tag{}).Error
+	if err != nil {
+		logging.Error("Clear all soft deleted tag failed: ", err)
 		return false
 	}
 	return true

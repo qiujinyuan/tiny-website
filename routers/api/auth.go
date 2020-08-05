@@ -59,6 +59,7 @@ func GetAuth(c *gin.Context) {
 			} else {
 				saveErr := createAuth(auth.ID.String(), td)
 				if saveErr != nil {
+					fmt.Printf("%v\n", saveErr)
 					code = e.ErrorSaveToken
 				} else {
 					data["accessToken"] = td.AccessToken
