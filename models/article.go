@@ -99,7 +99,7 @@ func DeleteArticle(id string) (err error) {
 
 // ClearAllSoftDeletedArticle 删除所有已经软删除的 article
 func ClearAllSoftDeletedArticle() bool {
-	err := db.Where("deleted_at IS NOT NULL").Delete(&Article{}).Error
+	err := db.Unscoped().Where("deleted_at IS NOT NULL").Delete(&Article{}).Error
 	if err != nil {
 		logging.Error("Clear all soft deleted article failed: ", err)
 		return false

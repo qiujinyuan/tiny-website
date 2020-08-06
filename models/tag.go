@@ -84,7 +84,7 @@ func EditTag(id string, data interface{}) bool {
 
 // ClearAllSoftDeletedTag 删除所有已经软删除的 tag
 func ClearAllSoftDeletedTag() bool {
-	err := db.Where("deleted_at IS NOT NULL").Delete(&Tag{}).Error
+	err := db.Unscoped().Where("deleted_at IS NOT NULL").Delete(&Tag{}).Error
 	if err != nil {
 		logging.Error("Clear all soft deleted tag failed: ", err)
 		return false
