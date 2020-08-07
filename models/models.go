@@ -136,7 +136,9 @@ func init() {
 	var err error
 	db, err = gorm.Open(setting.DBType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", setting.DBUser, setting.DBPassword, setting.DBHost, setting.DBName))
 	if err != nil {
-		log.Println(err)
+		// log.Println(err)
+		// docker-compose 启动时，如果需要同时启动 mysql，但是是在 mysql 启动中就尝试建立连接，会导致连接失败，此处强制程序退出，然后利用 docker-compose 的 restart 机制来重启后再次连接
+		log.Fatal(err)
 	}
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return setting.DBTablePrefix + defaultTableName

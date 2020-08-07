@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  web:
+    depends_on:
+      - mysql
+      - redis
+    build: .
+    ports:
+      - "10086:10086"
+    restart: always
+    networks:
+      - net
+
+  mysql:
+    image: mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+    networks:
+      - net
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: tiny_website
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+    restart: always
+    networks:
+      - net
+    ports:
+      - "6379:6379"
+
+volumes:
+  redis_data:
+  mysql_data:
+
+networks:
+  net:

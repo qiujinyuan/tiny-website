@@ -1,9 +1,9 @@
-create database tiny_website;
-use tiny_website;
+CREATE DATABASE IF NOT EXISTS tiny_website;
+USE tiny_website;
 drop table blog_tag;
 drop table blog_article;
 
-CREATE TABLE `blog_tag` (
+CREATE TABLE IF NOT EXISTS `blog_tag` (
   `id` VARCHAR(36) NOT NULL,
   `name` varchar(100) DEFAULT '' COMMENT '标签名称',
   `created_at` int(10) DEFAULT NULL COMMENT '创建时间',
@@ -15,7 +15,7 @@ CREATE TABLE `blog_tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章标签管理';
 
-CREATE TABLE `blog_article` (
+CREATE TABLE IF NOT EXISTS `blog_article` (
   `id` VARCHAR(36) NOT NULL,
   `tag_id` VARCHAR(36) COMMENT '标签ID',
   `title` varchar(100) DEFAULT '' COMMENT '文章标题',
@@ -30,7 +30,7 @@ CREATE TABLE `blog_article` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章管理';
 
-CREATE TABLE `blog_auth` (
+CREATE TABLE IF NOT EXISTS `blog_auth` (
   `id` VARCHAR(36) NOT NULL,
   `username` varchar(50) DEFAULT '' COMMENT '账号',
   `password` varchar(50) DEFAULT '' COMMENT '密码',
@@ -41,4 +41,4 @@ INSERT INTO `tiny_website`.`blog_auth` (`id`, `username`, `password`) VALUES (uu
 
 INSERT INTO `tiny_website`.`blog_tag` (`id`, `name`) VALUES (uuid(), 'default');
 
-INSERT INTO `tiny_website`.`blog_article` (`id`, `tag_id`, `title`, `desc`, `content`) VALUES (uuid(), '1eb562e9-d6ea-11ea-a475-0242ac110002', 'default title', 'default desc', 'default content');
+-- INSERT INTO `tiny_website`.`blog_article` (`id`, `tag_id`, `title`, `desc`, `content`) VALUES (uuid(), '1eb562e9-d6ea-11ea-a475-0242ac110002', 'default title', 'default desc', 'default content');
