@@ -49,6 +49,7 @@
 - [gin](https://gin-gonic.com/docs/examples/controlling-log-output-coloring/)
 - [UUID package for Go language](https://github.com/satori/go.uuid)
 - [go-redis](https://github.com/go-redis/redis)
+- [golangci-lint](https://golangci-lint.run/usage/linters)
 
 ## 构建
 

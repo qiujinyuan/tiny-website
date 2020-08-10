@@ -14,10 +14,10 @@ var ctx = context.Background()
 // GoRedisExampleClient go-redis example
 func GoRedisExampleClient() {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:        setting.RedisCfg["addr"].(string),
-		Password:    setting.RedisCfg["password"].(string),
-		Network:     setting.RedisCfg["network"].(string),
-		DialTimeout: time.Duration(setting.RedisCfg["dialtimeout"].(int)) * time.Second,
+		Addr:        setting.RedisSetting.Addr,
+		Password:    setting.RedisSetting.Password,
+		Network:     setting.RedisSetting.Network,
+		DialTimeout: setting.RedisSetting.DialTimeout * time.Second,
 		DB:          0,
 		OnConnect: func(ctx context.Context, c *redis.Conn) error {
 			pong, err := c.Ping(ctx).Result()

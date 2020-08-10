@@ -23,10 +23,10 @@ func Start() {
 	r := routers.InitRouter()
 
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Addr:           fmt.Sprintf(":%d", setting.ServerSetting.HttpPort),
 		Handler:        r,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		ReadTimeout:    setting.ServerSetting.ReadTimeout * time.Second,
+		WriteTimeout:   setting.ServerSetting.WriteTimeout * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 

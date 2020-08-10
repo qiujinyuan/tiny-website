@@ -2,37 +2,58 @@ package setting
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/spf13/viper"
 )
 
-// Setting ...
-var (
-	Cfg *viper.Viper
-
-	RunMode string
-
-	HTTPPort     int
+type Server struct {
+	RunMode      string
+	HttpPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
+}
+
+type App struct {
+	PageSize int
 
 	AccessJwtSecret     string
 	RefreshJwtSecret    string
 	AccessTokenExpires  time.Duration
 	RefreshTokenExpires time.Duration
+}
 
-	PageSize int
+type RedisCfg struct {
+	Addr        string
+	Network     string
+	DialTimeout time.Duration
+	Password    string
 
-	DBType        string
-	DBUser        string
-	DBPassword    string
-	DBHost        string
-	DBName        string
-	DBTablePrefix string
+	MaxIdle     int
+	MaxActive   int
+	IdleTimeout time.Duration
+}
 
-	RedisCfg map[string]interface{}
-)
+type MySQLCfg struct {
+	Type        string
+	User        string
+	Password    string
+	Host        string
+	Name        string
+	TablePrefix string
+}
+
+var ServerSetting = &Server{}
+
+var AppSetting = &App{}
+
+var RedisSetting = &RedisCfg{}
+
+var MySQLSetting = &MySQLCfg{}
+
+// Setting ...
+var cfg *viper.Viper
 
 func init() {
 	viper.SetConfigName("app")
@@ -42,43 +63,18 @@ func init() {
 	if err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s", err))
 	}
-	Cfg = viper.GetViper()
-	loadBase()
-	loadServer()
-	loadApp()
-	loadDB()
-	loadRedisCfg()
+	cfg = viper.GetViper()
+
+	load("Server", ServerSetting)
+	load("App", AppSetting)
+	load("MySQL", MySQLSetting)
+	load("RedisCfg", RedisSetting)
 }
 
-func loadBase() {
-	Cfg.SetDefault("RunMode", "debug")
-	RunMode = Cfg.GetString("RunMode")
-}
-
-func loadServer() {
-	HTTPPort = Cfg.GetInt("HTTPPort")
-	ReadTimeout = time.Duration(Cfg.GetInt("ReadTimeout")) * time.Second
-	WriteTimeout = time.Duration(Cfg.GetInt("WriteTimeout")) * time.Second
-}
-
-func loadApp() {
-	AccessJwtSecret = Cfg.GetString("AccessJwtSecret")
-	RefreshJwtSecret = Cfg.GetString("RefreshJwtSecret")
-	AccessTokenExpires = time.Duration(Cfg.GetInt("AccessTokenExpires"))
-	RefreshTokenExpires = time.Duration(Cfg.GetInt("AccessTokenExpires"))
-	PageSize = Cfg.GetInt("PageSize")
-}
-
-func loadDB() {
-	DBType = Cfg.GetString("DBType")
-	DBUser = Cfg.GetString("DBUser")
-	DBPassword = Cfg.GetString("DBPassword")
-	DBHost = Cfg.GetString("DBHost")
-	DBName = Cfg.GetString("DBName")
-	DBTablePrefix = Cfg.GetString("DBTablePrefix")
-}
-
-func loadRedisCfg() {
+func load(subName string, targetCfg interface{}) {
 	// Important: Viper configuration keys are case insensitive. There are ongoing discussions about making that optional.
-	RedisCfg = Cfg.GetStringMap("RedisCfg")
+	err := cfg.Sub(subName).Unmarshal(targetCfg)
+	if err != nil {
+		log.Fatalf("unable to decode into %v struct, %v", subName, err)
+	}
 }

@@ -38,10 +38,10 @@ type AccessDetails struct {
 // GenerateToken generate a token
 func GenerateToken(userID string) (td *TokenDetails, err error) {
 	td = &TokenDetails{}
-	td.AtExpires = time.Now().Add(time.Minute * setting.AccessTokenExpires).Unix()
+	td.AtExpires = time.Now().Add(time.Minute * setting.AppSetting.AccessTokenExpires).Unix()
 	td.AccessUUID = uuid.NewV4().String()
 
-	td.RtExpires = time.Now().Add(time.Hour * 24 * setting.RefreshTokenExpires).Unix()
+	td.RtExpires = time.Now().Add(time.Hour * 24 * setting.AppSetting.RefreshTokenExpires).Unix()
 	td.RefreshUUID = uuid.NewV4().String()
 
 	atClaims := jwt.MapClaims{}
@@ -50,7 +50,7 @@ func GenerateToken(userID string) (td *TokenDetails, err error) {
 	atClaims["user_id"] = userID
 	atClaims["exp"] = td.AtExpires
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
-	td.AccessToken, err = at.SignedString([]byte(setting.AccessJwtSecret))
+	td.AccessToken, err = at.SignedString([]byte(setting.AppSetting.AccessJwtSecret))
 	if err != nil {
 		return
 	}
@@ -60,7 +60,7 @@ func GenerateToken(userID string) (td *TokenDetails, err error) {
 	rtClaims["user_id"] = userID
 	rtClaims["exp"] = td.RtExpires
 	rt := jwt.NewWithClaims(jwt.SigningMethodHS256, rtClaims)
-	td.RefreshToken, err = rt.SignedString([]byte(setting.RefreshJwtSecret))
+	td.RefreshToken, err = rt.SignedString([]byte(setting.AppSetting.RefreshJwtSecret))
 	return
 }
 
@@ -80,7 +80,7 @@ func VerifyToken(r *http.Request) (*jwt.Token, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(setting.AccessJwtSecret), nil
+		return []byte(setting.AppSetting.AccessJwtSecret), nil
 	})
 	if err != nil {
 		return nil, err

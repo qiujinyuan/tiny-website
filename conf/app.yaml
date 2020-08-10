@@ -1,38 +1,40 @@
 ---
-#debug or release
-RunMode: debug
+Server:
+  #debug or release
+  RunMode: debug
+  #server
+  HttpPort: 10086
+  ReadTimeout: 10
+  WriteTimeout: 10
 
-#server
-HTTPPort: 10086
-ReadTimeout: 10
-WriteTimeout: 10
-
-#app
-PageSize: 10
-AccessJwtSecret: hsyqgw77&&&dghsd
-RefreshJwtSecret: ahsdua17819cskcdskd
-# access token expires after 15 minute
-AccessTokenExpires: 15
-## refresh token expires after 7 days
-RefreshTokenExpires: 7
+App:
+  #app
+  PageSize: 10
+  AccessJwtSecret: hsyqgw77&&&dghsd
+  RefreshJwtSecret: ahsdua17819cskcdskd
+  # access token expires after 15 minute
+  AccessTokenExpires: 15
+  ## refresh token expires after 7 days
+  RefreshTokenExpires: 7
 
 #database
-DBType: mysql
-DBUser: root
-# 前导0 会被当作 八进制数 viper.GetString() 后返回十进制数, 需要加引号
-# 链接 docker 中安装的 mysql
-DBPassword: rootroot
-DBHost: mysql:3306
-DBName: tiny_website
-DBTablePrefix: blog_
+MySQL:
+  Type: mysql
+  User: root
+  # 前导0 会被当作 八进制数 viper.GetString() 后返回十进制数, 需要加引号
+  # 链接 docker 中安装的 mysql
+  Password: rootroot
+  Host: mysql:3306
+  Name: tiny_website
+  TablePrefix: blog_
 
 #redis config
 RedisCfg:
   # viper GetStringMap() method will return lowercase key
-  addr: redis:6379
-  network: tcp
-  dialtimeout: 5
-  password: ""
-  maxidle: 30
-  maxactive: 30
-  adletimeout: 20
+  Addr: redis:6379
+  Network: tcp
+  DialTimeout: 5
+  Password: ""
+  MaxIdle: 30
+  MaxActive: 30
+  IdleTimeout: 20

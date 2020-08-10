@@ -73,7 +73,7 @@ func GetArticles(c *gin.Context) {
 		}
 	} else {
 		code = e.Success
-		data["list"] = models.GetArticles(util.GetPage(c), setting.PageSize, maps)
+		data["list"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
 		data["total"] = models.GetArticleTotal(maps)
 	}
 
