@@ -17,7 +17,7 @@ var RDB *redis.Client
 var ctx = context.Background()
 
 // Setup set up redis
-func Setup() error {
+func Setup() {
 	RDB = redis.NewClient(&redis.Options{
 		Addr:        setting.RedisSetting.Addr,
 		Password:    setting.RedisSetting.Password,
@@ -32,9 +32,8 @@ func Setup() error {
 	})
 	r, err := RDB.Ping(ctx).Result()
 	if err != nil {
-		fmt.Printf("Redis conn test failed, result: %v, error: %v", r, err)
+		log.Fatalf("Redis conn test failed, result: %v, error: %v\n", r, err)
 	}
-	return nil
 }
 
 // Set ...

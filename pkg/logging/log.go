@@ -32,7 +32,7 @@ const (
 	FATAL
 )
 
-func init() {
+func Setup() {
 	filePath := getLogFileFullPath()
 	F = openLogFile(filePath)
 

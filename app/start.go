@@ -9,7 +9,9 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/yrjkqq/tiny-website/models"
 	"github.com/yrjkqq/tiny-website/pkg/gredis"
+	"github.com/yrjkqq/tiny-website/pkg/logging"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
 	"github.com/yrjkqq/tiny-website/routers"
 )
@@ -17,6 +19,9 @@ import (
 // Start start the tiny-website
 func Start() {
 	fmt.Println("starting...")
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
 
 	gredis.Setup()
 

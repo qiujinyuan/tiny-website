@@ -132,7 +132,7 @@ func deleteCallback(scope *gorm.Scope) {
 	}
 }
 
-func init() {
+func Setup() {
 	var err error
 	db, err = gorm.Open(
 		setting.MySQLSetting.Type,

@@ -22,6 +22,19 @@ type App struct {
 	RefreshJwtSecret    string
 	AccessTokenExpires  time.Duration
 	RefreshTokenExpires time.Duration
+
+	RuntimeRootPath string
+
+	ImagePrefixUrl string
+	ImageSavePath  string
+	// MB
+	ImageMaxSize   int
+	ImageAllowExts string
+
+	LogSavePath string
+	LogSaveName string
+	LogFileExt  string
+	TimeFormat  string
 }
 
 type RedisCfg struct {
@@ -55,7 +68,7 @@ var MySQLSetting = &MySQLCfg{}
 // Setting ...
 var cfg *viper.Viper
 
-func init() {
+func Setup() {
 	viper.SetConfigName("app")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("conf")

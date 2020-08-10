@@ -5,23 +5,26 @@ import (
 	"log"
 	"os"
 	"time"
-)
 
-// LogSavePath ...
-var (
-	LogSavePath = "runtime/logs/"
-	LogSaveName = "log"
-	LogFileExt  = "log"
-	TimeFormat  = "20060102"
+	"github.com/yrjkqq/tiny-website/pkg/setting"
 )
 
 func getLogFilePath() string {
-	return LogSavePath
+	return fmt.Sprintf(
+		"%s%s",
+		setting.AppSetting.RuntimeRootPath,
+		setting.AppSetting.LogSavePath,
+	)
 }
 
 func getLogFileFullPath() string {
 	prefixPath := getLogFilePath()
-	suffixPath := fmt.Sprintf("%s%s.%s", LogSaveName, time.Now().Format(TimeFormat), LogFileExt)
+	suffixPath := fmt.Sprintf(
+		"%s%s.%s",
+		setting.AppSetting.LogSaveName,
+		time.Now().Format(setting.AppSetting.TimeFormat),
+		setting.AppSetting.LogFileExt,
+	)
 
 	return fmt.Sprintf("%s%s", prefixPath, suffixPath)
 }
