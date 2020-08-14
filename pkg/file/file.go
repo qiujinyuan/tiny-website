@@ -26,6 +26,24 @@ func CheckPermission(src string) bool {
 	return os.IsPermission(err)
 }
 
-// func IsNOtExistMkDir(src string) error {
-// 	if
-// }
+func IsNotExistMkDir(src string) error {
+	if notExist := CheckNotExist(src); notExist {
+		if err := MkDir(src); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func MkDir(src string) error {
+	err := os.MkdirAll(src, os.ModePerm)
+	return err
+}
+
+func Open(name string, flag int, perm os.FileMode) (*os.File, error) {
+	f, err := os.OpenFile(name, flag, perm)
+	if err != nil {
+		return nil, err
+	}
+	return f, nil
+}
