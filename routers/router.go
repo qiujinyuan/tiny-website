@@ -35,7 +35,7 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 
 	r.GET("/auth", api.GetAuth)
-
+	r.POST("/upload", api.UploadImage)
 	r.GET("/logout", jwt.JWT(), api.Logout)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

@@ -25,7 +25,7 @@ func GetTags(c *gin.Context) {
 		maps["name"] = name
 	}
 
-	var state int = -1
+	var state int
 
 	if arg := c.Query("state"); arg != "" {
 		state = com.StrTo(arg).MustInt()
@@ -35,7 +35,7 @@ func GetTags(c *gin.Context) {
 	data["list"] = models.GetTags(util.GetPage(c), setting.AppSetting.PageSize, maps)
 	data["total"] = models.GetTagTotal(maps)
 
-	code := e.Success
+	code := e.SUCCESS
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
 		"msg":  e.GetMsg(code),
@@ -65,7 +65,7 @@ func AddTag(c *gin.Context) {
 	valid.MaxSize(createdBy, 100, "createdBy").Message("创建人最长为 100 字符")
 	valid.Range(state, 0, 1, "state").Message("状态只允许 0 或 1")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
@@ -74,10 +74,10 @@ func AddTag(c *gin.Context) {
 		}
 	} else {
 		if exist, _ := models.ExistTagByName(name); exist {
-			code = e.ErrorExistTag
+			code = e.ERROR_EXIST_TAG
 		} else {
 			models.AddTag(name, state, createdBy)
-			code = e.Success
+			code = e.SUCCESS
 		}
 	}
 
@@ -107,7 +107,7 @@ func EditTag(c *gin.Context) {
 	valid.MaxSize(modifiedBy, 100, "modifiedBy").Message("修改人最长为100字符")
 	valid.MaxSize(name, 100, "name").Message("名称最长为100字符")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
@@ -120,7 +120,7 @@ func EditTag(c *gin.Context) {
 			data["modifiedBy"] = modifiedBy
 			if name != "" {
 				if exist, _ = models.ExistTagByName(name); exist {
-					code = e.ErrorExistTag
+					code = e.ERROR_EXIST_TAG
 					c.JSON(http.StatusOK, gin.H{
 						"code": code,
 						"msg":  e.GetMsg(code),
@@ -133,12 +133,12 @@ func EditTag(c *gin.Context) {
 				data["state"] = state
 			}
 			if models.EditTag(id, data) {
-				code = e.Success
+				code = e.SUCCESS
 			} else {
-				code = e.Error
+				code = e.ERROR
 			}
 		} else {
-			code = e.ErrorNotExistTag
+			code = e.ERROR_NOT_EXIST_TAG
 		}
 	}
 
@@ -155,16 +155,16 @@ func DeleteTag(c *gin.Context) {
 	valid := validation.Validation{}
 	valid.Required(id, "id").Message("ID 不能为空")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		if exist, _ := models.ExistTagByID(id); exist {
 			if models.DeleteTag(id) {
-				code = e.Success
+				code = e.SUCCESS
 			} else {
-				code = e.Error
+				code = e.ERROR
 			}
 		} else {
-			code = e.ErrorNotExistTag
+			code = e.ERROR_NOT_EXIST_TAG
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{

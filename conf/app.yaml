@@ -23,7 +23,10 @@ App:
   ImageSavePath: upload/images/
   # MB
   ImageMaxSize: 5
-  ImageAllowExts: .jpg,.jpeg,.png
+  ImageAllowExts:
+    - .jpg
+    - .jpeg
+    - .png
 
   LogSavePath: logs/
   LogSaveName: log

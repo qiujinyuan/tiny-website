@@ -47,7 +47,7 @@ func GetAuth(c *gin.Context) {
 	ok, _ := valid.Valid(&a)
 
 	data := make(map[string]interface{})
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 
 	if ok {
@@ -55,20 +55,20 @@ func GetAuth(c *gin.Context) {
 		if isExist {
 			td, err := util.GenerateToken(auth.ID.String())
 			if err != nil {
-				code = e.ErrorAuthToken
+				code = e.ERROR_AUTH_TOKEN
 			} else {
 				saveErr := createAuth(auth.ID.String(), td)
 				if saveErr != nil {
 					fmt.Printf("%v\n", saveErr)
-					code = e.ErrorSaveToken
+					code = e.ERROR_SAVE_TOKEN
 				} else {
 					data["accessToken"] = td.AccessToken
 					data["refreshToken"] = td.RefreshToken
-					code = e.Success
+					code = e.SUCCESS
 				}
 			}
 		} else {
-			code = e.ErrorAuth
+			code = e.ERROR_AUTH
 		}
 	} else {
 		for _, err := range valid.Errors {
@@ -112,6 +112,6 @@ func Logout(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code": e.Success,
+		"code": e.SUCCESS,
 	})
 }

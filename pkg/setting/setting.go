@@ -29,7 +29,7 @@ type App struct {
 	ImageSavePath  string
 	// MB
 	ImageMaxSize   int
-	ImageAllowExts string
+	ImageAllowExts []string
 
 	LogSavePath string
 	LogSaveName string

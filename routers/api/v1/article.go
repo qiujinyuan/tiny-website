@@ -21,20 +21,20 @@ func GetArticle(c *gin.Context) {
 	valid := validation.Validation{}
 	valid.Required(id, "id").Message("ID 不能为空")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	var data interface{}
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
 		if exist, _ := models.ExistArticleByID(id); exist {
 			data = models.GetArticle(id)
-			code = e.Success
+			code = e.SUCCESS
 		} else {
-			code = e.ErrorNotExistArticle
+			code = e.ERROR_NOT_EXIST_ARTICLE
 		}
 	}
 
@@ -51,7 +51,7 @@ func GetArticles(c *gin.Context) {
 	maps := make(map[string]interface{})
 	valid := validation.Validation{}
 
-	var state int = -1
+	var state int
 	if arg := c.Query("state"); arg != "" {
 		state = com.StrTo(arg).MustInt()
 		maps["state"] = state
@@ -64,7 +64,7 @@ func GetArticles(c *gin.Context) {
 		maps["tagID"] = tagID
 	}
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
@@ -72,7 +72,7 @@ func GetArticles(c *gin.Context) {
 			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
 		}
 	} else {
-		code = e.Success
+		code = e.SUCCESS
 		data["list"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
 		data["total"] = models.GetArticleTotal(maps)
 	}
@@ -101,7 +101,7 @@ func AddArticle(c *gin.Context) {
 	valid.Required(createdBy, "createdBy").Message("创建人不能为空")
 	valid.Range(state, 0, 1, "state").Message("状态只允许 0 或 1")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
@@ -120,12 +120,12 @@ func AddArticle(c *gin.Context) {
 					"state":     state,
 				})
 				if success {
-					code = e.Success
+					code = e.SUCCESS
 				} else {
-					code = e.Error
+					code = e.ERROR
 				}
 			} else {
-				code = e.ErrorNotExistTag
+				code = e.ERROR_NOT_EXIST_TAG
 			}
 		} else {
 			success := models.AddArticle(map[string]interface{}{
@@ -136,9 +136,9 @@ func AddArticle(c *gin.Context) {
 				"state":     state,
 			})
 			if success {
-				code = e.Success
+				code = e.SUCCESS
 			} else {
-				code = e.Error
+				code = e.ERROR
 			}
 		}
 	}
@@ -161,7 +161,7 @@ func EditArticle(c *gin.Context) {
 	content := c.Query("content")
 	modifiedBy := c.Query("modifiedBy")
 
-	var state int = -1
+	var state int
 	if arg := c.Query("state"); arg != "" {
 		state = com.StrTo(arg).MustInt()
 		valid.Range(state, 0, 1, "state").Message("状态只允许 0 或 1")
@@ -174,7 +174,7 @@ func EditArticle(c *gin.Context) {
 	valid.Required(modifiedBy, "modifiedBy").Message("修改人不能为空")
 	valid.MaxSize(modifiedBy, 100, "modifiedBy").Message("修改人最长为100字符")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
@@ -187,7 +187,7 @@ func EditArticle(c *gin.Context) {
 			if tagID != "" {
 				existTag, _ := models.ExistTagByID(tagID)
 				if !existTag {
-					code = e.ErrorNotExistTag
+					code = e.ERROR_NOT_EXIST_TAG
 					c.JSON(http.StatusOK, gin.H{
 						"code": code,
 						"msg":  e.GetMsg(code),
@@ -208,12 +208,12 @@ func EditArticle(c *gin.Context) {
 			data["modifiedBy"] = modifiedBy
 			success := models.EditArticle(id, data)
 			if success {
-				code = e.Success
+				code = e.SUCCESS
 			} else {
-				code = e.Error
+				code = e.ERROR
 			}
 		} else {
-			code = e.ErrorNotExistArticle
+			code = e.ERROR_NOT_EXIST_ARTICLE
 		}
 	}
 
@@ -231,7 +231,7 @@ func DeleteArticle(c *gin.Context) {
 	valid := validation.Validation{}
 	valid.Required(id, "id").Message("ID 不能为空")
 
-	code := e.InvalidParams
+	code := e.INVALID_PARAMS
 	var msg string
 	if valid.HasErrors() {
 		for _, err := range valid.Errors {
@@ -242,13 +242,13 @@ func DeleteArticle(c *gin.Context) {
 		if exist, _ := models.ExistArticleByID(id); exist {
 			err := models.DeleteArticle(id)
 			if err != nil {
-				code = e.Error
+				code = e.ERROR
 				msg += err.Error()
 			} else {
-				code = e.Success
+				code = e.SUCCESS
 			}
 		} else {
-			code = e.ErrorNotExistArticle
+			code = e.ERROR_NOT_EXIST_ARTICLE
 		}
 	}
 
