@@ -93,12 +93,14 @@ func AddArticle(c *gin.Context) {
 	content := c.Query("content")
 	createdBy := c.Query("createdBy")
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
+	coverImageUrl := c.Query("coverImageUrl")
 
 	valid := validation.Validation{}
 	valid.Required(title, "title").Message("标题不能为空")
 	valid.Required(desc, "desc").Message("简述不能为空")
 	valid.Required(content, "content").Message("内容不能为空")
 	valid.Required(createdBy, "createdBy").Message("创建人不能为空")
+	valid.Required(coverImageUrl, "coverImageUrl").Message("封面图片地址不能为空")
 	valid.Range(state, 0, 1, "state").Message("状态只允许 0 或 1")
 
 	code := e.INVALID_PARAMS
@@ -112,12 +114,13 @@ func AddArticle(c *gin.Context) {
 		if tagID != "" {
 			if exist, _ := models.ExistTagByID(tagID); exist {
 				success := models.AddArticle(map[string]interface{}{
-					"tagID":     tagID,
-					"title":     title,
-					"desc":      desc,
-					"content":   content,
-					"createdBy": createdBy,
-					"state":     state,
+					"tagID":         tagID,
+					"title":         title,
+					"desc":          desc,
+					"content":       content,
+					"createdBy":     createdBy,
+					"state":         state,
+					"coverImageUrl": coverImageUrl,
 				})
 				if success {
 					code = e.SUCCESS
@@ -129,11 +132,12 @@ func AddArticle(c *gin.Context) {
 			}
 		} else {
 			success := models.AddArticle(map[string]interface{}{
-				"title":     title,
-				"desc":      desc,
-				"content":   content,
-				"createdBy": createdBy,
-				"state":     state,
+				"title":         title,
+				"desc":          desc,
+				"content":       content,
+				"createdBy":     createdBy,
+				"state":         state,
+				"coverImageUrl": coverImageUrl,
 			})
 			if success {
 				code = e.SUCCESS
@@ -160,6 +164,7 @@ func EditArticle(c *gin.Context) {
 	desc := c.Query("desc")
 	content := c.Query("content")
 	modifiedBy := c.Query("modifiedBy")
+	coverImageUrl := c.Query("coverImageUrl")
 
 	var state int
 	if arg := c.Query("state"); arg != "" {
@@ -172,6 +177,7 @@ func EditArticle(c *gin.Context) {
 	valid.MaxSize(desc, 255, "desc").Message("简述最长为255字符")
 	valid.MaxSize(content, 65535, "content").Message("内容最长为65535字符")
 	valid.Required(modifiedBy, "modifiedBy").Message("修改人不能为空")
+	valid.Required(coverImageUrl, "coverImageUrl").Message("封面图片地址不能为空")
 	valid.MaxSize(modifiedBy, 100, "modifiedBy").Message("修改人最长为100字符")
 
 	code := e.INVALID_PARAMS
@@ -204,6 +210,9 @@ func EditArticle(c *gin.Context) {
 			}
 			if content != "" {
 				data["content"] = content
+			}
+			if coverImageUrl != "" {
+				data["coverImageUrl"] = coverImageUrl
 			}
 			data["modifiedBy"] = modifiedBy
 			success := models.EditArticle(id, data)

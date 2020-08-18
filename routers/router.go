@@ -15,6 +15,7 @@ import (
 	_ "github.com/yrjkqq/tiny-website/docs"
 	"github.com/yrjkqq/tiny-website/middleware/jwt"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
+	"github.com/yrjkqq/tiny-website/pkg/upload"
 	"github.com/yrjkqq/tiny-website/routers/api"
 	v1 "github.com/yrjkqq/tiny-website/routers/api/v1"
 	"github.com/yrjkqq/tiny-website/testdata/protoexample"
@@ -33,6 +34,9 @@ func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	r.RouterGroup.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	// r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 
 	r.GET("/auth", api.GetAuth)
 	r.POST("/upload", api.UploadImage)

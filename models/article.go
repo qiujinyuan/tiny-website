@@ -19,6 +19,8 @@ type Article struct {
 	CreatedBy  string `json:"createdBy"`
 	ModifiedBy string `json:"modifiedBy"`
 	State      int    `json:"state"`
+	// 封面图片地址
+	CoverImageUrl string `json:"coverImageUrl"`
 }
 
 // ExistArticleByID 通过 id 判断 article 是否存在
@@ -72,12 +74,13 @@ func AddArticle(data map[string]interface{}) bool {
 		tagID = ""
 	}
 	err := db.Create(&Article{
-		TagID:     tagID,
-		Title:     data["title"].(string),
-		Desc:      data["desc"].(string),
-		Content:   data["content"].(string),
-		CreatedBy: data["createdBy"].(string),
-		State:     data["state"].(int),
+		TagID:         tagID,
+		Title:         data["title"].(string),
+		Desc:          data["desc"].(string),
+		Content:       data["content"].(string),
+		CreatedBy:     data["createdBy"].(string),
+		State:         data["state"].(int),
+		CoverImageUrl: data["coverImageUrl"].(string),
 	}).Error
 
 	if err != nil {
