@@ -8,34 +8,35 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
 	"github.com/yrjkqq/tiny-website/models"
+	"github.com/yrjkqq/tiny-website/pkg/app"
 	"github.com/yrjkqq/tiny-website/pkg/e"
 	"github.com/yrjkqq/tiny-website/pkg/logging"
 	"github.com/yrjkqq/tiny-website/pkg/setting"
 	"github.com/yrjkqq/tiny-website/pkg/util"
+	"github.com/yrjkqq/tiny-website/service/cache"
 )
 
 // GetArticle 获取单个文章
 func GetArticle(c *gin.Context) {
+	appG := app.Gin{C: c}
 	id := c.Param("id")
 
 	valid := validation.Validation{}
 	valid.Required(id, "id").Message("ID 不能为空")
 
-	code := e.INVALID_PARAMS
-	var msg string
-	var data interface{}
 	if valid.HasErrors() {
-		for _, err := range valid.Errors {
-			logging.Info(err.Key, err.Message)
-			msg += fmt.Sprintf(" %v: %v;", err.Key, err.Message)
-		}
+		appG.Response(http.StatusOK, e.INVALID_PARAMS, app.MarkErrors(valid.Errors), nil)
+		return
+	}
+
+	articleService := cache.Article{ID: id}
+	exists, err := articleService.ExistTagByID()
+
+	if exist, _ := models.ExistArticleByID(id); exist {
+		data = models.GetArticle(id)
+		code = e.SUCCESS
 	} else {
-		if exist, _ := models.ExistArticleByID(id); exist {
-			data = models.GetArticle(id)
-			code = e.SUCCESS
-		} else {
-			code = e.ERROR_NOT_EXIST_ARTICLE
-		}
+		code = e.ERROR_NOT_EXIST_ARTICLE
 	}
 
 	c.JSON(http.StatusOK, gin.H{
