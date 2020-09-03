@@ -2,10 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
 
-	"github.com/yrjkqq/tiny-website/app"
-	"github.com/yrjkqq/tiny-website/app/build"
 	"github.com/yrjkqq/tiny-website/demo"
 )
 
@@ -29,18 +26,19 @@ func main() {
 		// demo.GoUUIDDemo()
 		// demo.GoRedisExampleClient()
 		// demo.ContextPkgUseDemo()
-		demo.CronUseDemo()
+		// demo.CronUseDemo()
+		demo.GoqueryExample()
 		return
 	}
 
-	fmt.Println("Version:\t", Version)
-	if *showVersion {
-		fmt.Println("build.Time:\t", build.Time)
-		fmt.Println("build.User:\t", build.User)
-		return
-	}
+	// fmt.Println("Version:\t", Version)
+	// if *showVersion {
+	// 	fmt.Println("build.Time:\t", build.Time)
+	// 	fmt.Println("build.User:\t", build.User)
+	// 	return
+	// }
 
-	go app.ServeBackground()
+	// go app.ServeBackground()
 
-	app.Start()
+	// app.Start()
 }

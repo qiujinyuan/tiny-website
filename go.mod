@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.3.1-0.20180527032555-9e463b461434
 	github.com/EDDYCJY/go-gin-example v0.0.0-20200505102242-63963976dee0
+	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/astaxie/beego v1.12.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
